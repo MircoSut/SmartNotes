@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { MdLogout } from "react-icons/md";
 
 export default function Navbar() {
   return (
@@ -12,8 +13,15 @@ export default function Navbar() {
           </Link>
         </div>
         <div className="flex items-center">
-          <div className="text-white px-2">Login</div>
-          <div className="text-white bg-green-400 p-2 rounded-lg">Register</div>
+          <Link href={"/login"} className="text-white px-2">
+            Login
+          </Link>
+          <Link
+            href={"/register"}
+            className="text-white bg-green-400 p-2 rounded-lg"
+          >
+            Register
+          </Link>
         </div>
       </ul>
     </div>
