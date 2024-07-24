@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 
 export default function Navbar() {
   const { data: session } = useSession();
+  console.log("session:", session);
 
   return (
     <div className="bg-black">
@@ -18,7 +19,8 @@ export default function Navbar() {
         </div>
         {session ? (
           <div className="flex flex-row">
-            <div className="text-white p-2">{session?.user?.email}</div>
+            <div className="text-white p-2">{session?.user?.username}</div>
+            {/* {console.log(session?.user)} */}
             <button
               onClick={() => signOut()}
               className="text-xl p-2 px-3 bg-blue-800 rounded-full text-white hover:bg-blue-500 rotate-180"
