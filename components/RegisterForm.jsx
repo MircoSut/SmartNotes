@@ -20,7 +20,26 @@ export default function RegisterForm() {
     }
 
     try {
-      const res = await fetch("api/register", {
+      const resAlreadyExists = await fetch("/api/alreadyExists", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, username }),
+      });
+
+      const { usernameInUse, emailInUse } = await resAlreadyExists.json();
+
+      if (usernameInUse) {
+        setError("Username already used.");
+        return;
+      }
+      if (emailInUse) {
+        setError("Email already used.");
+        return;
+      }
+
+      const res = await fetch("/api/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,10 +56,12 @@ export default function RegisterForm() {
         form.reset();
         router.push("/login");
       } else {
-        console.log("User registration failed.");
+        const data = await res.json();
+        setError(data.error || "User registration failed.");
       }
     } catch (error) {
       console.log("Error during registration: ", error);
+      setError("An unexpected error occurred.");
     }
   };
 
